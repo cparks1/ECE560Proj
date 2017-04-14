@@ -1,3 +1,6 @@
+# Engineer: Christopher Parks
+# Contact: cparks13 AT live.com
+
 path = input("Please enter text file with file paths. File paths must be newline separated.")
 try:
     file = open(path, 'rb')
