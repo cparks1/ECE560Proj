@@ -14,6 +14,9 @@ cwd = cwd.replace('\\', '/')  # If the user gave response in format "C:\Users\..
 if cwd.endswith('/'):  # If the user added '/' at the end, remove it so we know what to expect.
     cwd = cwd[:-1]
 
+pathsfilepath = cwd+'/'+'560paths.txt'  # Define the path of the file which will hold the locations of the generated files.
+pathsfile_opened = False  # Whether or not the paths file has been opened previously.
+
 for filesize in sizes:
     filepath = cwd + '/' + str(filesize) + '.txt'  # Define the path of the file being worked on.
     try:  # Attempt to open file path.
@@ -24,3 +27,11 @@ for filesize in sizes:
         for i in range(0, filesize):  # Generate random characters (0-9,A-Z,a-z) and write to file.
             file.write(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits))
         file.close()  # Close the file, as we are finished.
+        try:
+            file = open(pathsfilepath, 'a' if pathsfile_opened else 'w')  # Wipe the paths file if this is a new run. Append if not.
+        except:
+            print('Unexpected error. Could not write to the paths file.')
+        else:
+            pathsfile_opened = True
+            file.write(filepath + '\r\n')
+            file.close()
