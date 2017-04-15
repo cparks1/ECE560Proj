@@ -6,7 +6,7 @@ import string  # Used to grab character sets containing 0-9, A-Z, a-z, and conve
 # and then randomly generate text files of the following sizes: 1 KB, 100 KB, 1 MB, 100 MB, and 500 MB. These files
 # will be stored in the given directory, along with a text file that specifies the file path of each file.
 
-sizes = [1000, 100000, 1000000]#, 100000000, 500000000] # Definition of the file sizes.
+sizes = [1000, 100000, 1000000, 100000000, 500000000] # Definition of the file sizes.
 r = random.seed(1234)  # Set a seed so files generated in the future are identical.
 
 cwd = input("Define save directory: ")  # Ask the user to define where we'll save the randomly generated text files.
@@ -33,5 +33,5 @@ for filesize in sizes:
             print('Unexpected error. Could not write to the paths file.')
         else:
             pathsfile_opened = True
-            file.write(filepath + '\r\n')
+            file.write(filepath + '\n')
             file.close()

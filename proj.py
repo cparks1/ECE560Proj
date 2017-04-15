@@ -1,6 +1,8 @@
 # Engineer: Christopher Parks
 # Contact: cparks13 AT live.com
 
+import os  # Used for retrieving size of a file.
+
 path = input("Please enter text file with file paths. File paths must be newline separated.")
 try:
     file = open(path, 'rb')
@@ -16,6 +18,6 @@ else:
             f = open(p, 'rb')
         except:
             print("Error: '" + p + "' does not exist.")
-        else:
-            # Read the data in and execute the compression algorithm on it
-            print("Congratulations, '"+p+"' exists.")
+        else:  # Read the data in and execute the compression algorithm on it
+            fsize = os.path.getsize(p)  # Get the file's uncompressed size
+            print("File: '"+p+"', Size: "+str(fsize)+' bytes.')  # Report the file's uncompressed size
