@@ -2,14 +2,33 @@
 # Contact: cparks13 AT live.com
 
 import zlib  # Used for DEFLATE compression.
+import brotli  # Used for Brotli compression. Requires you run "pip install brotlipy" on Win/OS X to install the lib
 import time  # Used for recording how long a compression algorithm took to run
 
 
-def run_deflate(f, p):
-    print("File: '" + p + "'")  # Report the file name
-    indata = f.read()
+def run_deflate(indata, p):
+    print("DEFLATE on File: '" + p + "'")  # Report the file name
     outdata = zlib.compress(indata, zlib.DEFLATED)
     print('{} bytes => {} bytes'.format(len(indata), len(outdata)))  # Report the file size before and after compression
+
+
+def run_brotli(indata, p):
+    print("Brotli on File: '" + p + "'")  # Report the file name
+    outdata = brotli.compress(indata)
+    print('{} bytes => {} bytes'.format(len(indata), len(outdata)))  # Report the file size before and after compression
+
+
+def run_alg_test(f, p):
+    indata = f.read()
+    start = time.clock()
+    run_deflate(indata, p)
+    print("Took {} seconds to finish.\n".format(time.clock() - start))
+
+    start = time.clock()
+    run_brotli(indata, p)
+    print("Took {} seconds to finish.\n".format(time.clock() - start))
+
+#  --------MAIN PROGRAM EXECUTION--------
 
 path = input("Please enter text file with file paths. File paths must be newline separated.")
 try:
@@ -27,4 +46,4 @@ else:
         except:
             print("Error: '" + p + "' does not exist.")
         else:  # Read the data in and execute the compression algorithm on it
-            run_deflate(f, p)
+            run_alg_test(f, p)
