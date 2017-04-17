@@ -1,10 +1,14 @@
-import random  # Used for random generation
-import string  # Used to grab character sets containing 0-9, A-Z, a-z, and conversion of integers to strings.
-
 # Title: randfilegen.py
 # Description: To fulfill our project requirements, this python script will require the user to specify a directory
 # and then randomly generate text files of the following sizes: 1 KB, 100 KB, 1 MB, 100 MB, and 500 MB. These files
 # will be stored in the given directory, along with a text file that specifies the file path of each file.
+
+# Engineer: Christopher Parks
+# Email: cparks13 AT live DOT com
+
+
+import random  # Used for random generation
+import string  # Used to grab character sets containing 0-9, A-Z, a-z, and conversion of integers to strings.
 
 sizes = [1000, 100000, 1000000, 100000000, 500000000] # Definition of the file sizes.
 r = random.seed(1234)  # Set a seed so files generated in the future are identical.
