@@ -10,7 +10,7 @@ def compress(uncompressed):
     """Compress a string to a list of output symbols."""
 
     # Build the dictionary.
-    dict_size = 256
+    dict_size = 128
     #  in Python 2: dictionary = dict((chr(i), i) for i in xrange(dict_size))
     dictionary = {chr(i): i for i in range(dict_size)}
 

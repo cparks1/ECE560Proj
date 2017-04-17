@@ -8,46 +8,68 @@ import lzw as lzw  # Used for LZW compression.
 import time  # Used for recording how long a compression algorithm took to run
 
 
+def report_compression(indatlen, outdatlen, timediff):
+    print('{} bytes => {} bytes'.format(indatlen, outdatlen))  # Report the file size before and after compression
+    print("Took {} seconds to finish compression.\n".format(timediff))
+
+
+def report_decompression(origdatlen, decompdatlen, timediff):
+    print("Took {} seconds to finish decompression.".format(timediff))
+    print("Received {}/{} bytes.\n".format(decompdatlen, origdatlen))  # Bytes Received / # Original Bytes
+
 def run_deflate(indata, p):
     print("DEFLATE on File: '" + p + "'")  # Report the file name
+    start = time.clock()
     outdata = zlib.compress(indata, zlib.DEFLATED)
-    print('{} bytes => {} bytes'.format(len(indata), len(outdata)))  # Report the file size before and after compression
+    report_compression(len(indata), len(outdata), time.clock()-start)
+
+    start = time.clock()
+    indatlen = len(indata)
+    indata = zlib.decompress(outdata)
+    report_decompression(indatlen, len(indata), time.clock()-start)
 
 
 def run_brotli(indata, p):
     print("Brotli on File: '" + p + "'")  # Report the file name
+    start = time.clock()
     outdata = brotli.compress(indata)
-    print('{} bytes => {} bytes'.format(len(indata), len(outdata)))  # Report the file size before and after compression
+    report_compression(len(indata), len(outdata), time.clock() - start)
+
+    start = time.clock()
+    indatlen = len(indata)
+    indata = brotli.decompress(outdata)
+    report_decompression(indatlen, len(indata), time.clock() - start)
 
 def run_lzma(indata, p):
     print("LZMA on File: '" + p + "'")  # Report the file name
+    start = time.clock()
     outdata = lzma.compress(indata)
-    print('{} bytes => {} bytes'.format(len(indata), len(outdata)))  # Report the file size before and after compression
+    report_compression(len(indata), len(outdata), time.clock() - start)
+
+    start = time.clock()
+    indatlen = len(indata)
+    indata = lzma.decompress(outdata)
+    report_decompression(indatlen, len(indata), time.clock() - start)
 
 def run_lzw(indata, p):
     print("LZW on File: '" + p + "'")  # Report the file name
-    instrdata = "".join(map(chr, indata))
-    outdata = lzw.compress(instrdata)
-    print('{} bytes => {} bytes'.format(len(instrdata), len(outdata)))  # Report the file size before and after compression
+    start = time.clock()
+    outdata = lzw.compress(indata)
+    report_compression(len(indata), len(outdata), time.clock() - start)
+
+    start = time.clock()
+    indatlen = len(indata)
+    indata = lzw.decompress(outdata)
+    report_decompression(indatlen, len(indata), time.clock() - start)
 
 
 def run_alg_test(f, p):
     indata = f.read()
-    start = time.clock()
     run_deflate(indata, p)
-    print("Took {} seconds to finish.\n".format(time.clock() - start))
-
-    start = time.clock()
     run_brotli(indata, p)
-    print("Took {} seconds to finish.\n".format(time.clock() - start))
-
-    start = time.clock()
     run_lzma(indata, p)
-    print("Took {} seconds to finish.\n".format(time.clock() - start))
-
-    start = time.clock()
-    run_lzw(indata, p)
-    print("Took {} seconds to finish.\n".format(time.clock() - start))
+    #indata = "".join(map(chr, indata))  # Convert bytes to string format for LZW function
+    #run_lzw(indata, p)
 
 #  --------MAIN PROGRAM EXECUTION--------
 
