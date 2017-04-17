@@ -1,7 +1,15 @@
 # Engineer: Christopher Parks
 # Contact: cparks13 AT live.com
 
-import os  # Used for retrieving size of a file.
+import zlib  # Used for DEFLATE compression.
+import time  # Used for recording how long a compression algorithm took to run
+
+
+def run_deflate(f, p):
+    print("File: '" + p + "'")  # Report the file name
+    indata = f.read()
+    outdata = zlib.compress(indata, zlib.DEFLATED)
+    print('{} bytes => {} bytes'.format(len(indata), len(outdata)))  # Report the file size before and after compression
 
 path = input("Please enter text file with file paths. File paths must be newline separated.")
 try:
@@ -19,5 +27,4 @@ else:
         except:
             print("Error: '" + p + "' does not exist.")
         else:  # Read the data in and execute the compression algorithm on it
-            fsize = os.path.getsize(p)  # Get the file's uncompressed size
-            print("File: '"+p+"', Size: "+str(fsize)+' bytes.')  # Report the file's uncompressed size
+            run_deflate(f, p)
