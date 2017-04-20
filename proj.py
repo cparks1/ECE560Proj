@@ -102,6 +102,8 @@ def comp_ratio_subplot_setup(ax, i, title):
     ax_set_x_ticksandlabels(ax)
     ax.set_ylabel('Compression Ratio (%)')
     ax.set_title(title)
+    ax.set_autoscaley_on(False)
+    ax.set_ylim([0,1])
     ax.bar(x_pos, file_compression_size[i, :], align='center', color=['red','green','blue','magenta'])
 
 
@@ -144,9 +146,9 @@ else:
             i += 1
     plot.rcdefaults()
     fig, ((ax1, ax2), (ax3, ax4)) = plot.subplots(2, 2)
-    fig2, ((ax5, ax6), (ax7, ax8)) = plot.subplots(2,2)
-    fig3, ((ax9, ax10), (ax11, ax12)) = plot.subplots(2,2)
-    filedesc = ['1 KB Random File', '100 KB Random File', '1 MB Random File', '100 MB Random File']
+    fig2, ((ax5, ax6), (ax7, ax8)) = plot.subplots(2, 2)
+    fig3, ((ax9, ax10), (ax11, ax12)) = plot.subplots(2, 2)
+    filedesc = ['12 KB Image File', '1 MB Image File', '33 MB Image File', '100 MB Audio File']
     comp_ratio_subplot_setup(ax1, 0, 'Compression Ratio - '+filedesc[0])
     comp_ratio_subplot_setup(ax2, 1, 'Compression Ratio - '+filedesc[1])
     comp_ratio_subplot_setup(ax3, 2, 'Compression Ratio - '+filedesc[2])
